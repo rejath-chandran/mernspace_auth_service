@@ -2,8 +2,9 @@ import { config } from 'dotenv';
 
 config();
 
-const { PORT } = process.env;
+const { PORT, NODE_ENV } = process.env;
 
 export const configs = {
   PORT: PORT || 3000,
+  NODE_ENV: NODE_ENV || 'development',
 };

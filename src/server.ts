@@ -1,6 +1,17 @@
 import { configs } from './config';
 
-console.log('Server is running...');
-console.log('Server i     s running...');
+import app from './app';
 
-console.log('Server is running...', configs.PORT);
+import logger from './config/logger';
+const StartServer = async () => {
+  try {
+    app.listen(configs.PORT, () => {
+      logger.info(`Server running on port `, { port: configs.PORT, env: configs.NODE_ENV });
+    });
+  } catch (error) {
+    console.error('Error starting server:', error);
+    process.exit(1);
+  }
+};
+
+StartServer();
