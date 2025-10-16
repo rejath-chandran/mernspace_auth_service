@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
     "format:fix": "prettier --write .",
     "format:check": "prettier --check .",
     "lint:check": "eslint .",
