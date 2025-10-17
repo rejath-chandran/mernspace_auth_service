@@ -1,11 +1,11 @@
 import express, { NextFunction, Request, Response } from 'express';
-import createHttpError, { HttpError } from 'http-errors';
+import { HttpError } from 'http-errors';
 import logger from './config/logger';
 const app = express();
 
 app.get('/', async (req, res, next) => {
   try {
-    throw createHttpError(404, 'Not Found');
+    // throw createHttpError(401, 'Not Found');
     res.status(200).json({ message: 'Welcome to Auth Service' });
   } catch (error) {
     next(error);
