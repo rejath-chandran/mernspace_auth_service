@@ -47,10 +47,10 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      // secure: false, // set true in production
-      secure: true, // set true in production
-      sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: true, // ✅ required on HTTPS (Vercel/Render use HTTPS)
+      sameSite: 'none', // ✅ allow frontend on different domain
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     return res.json({

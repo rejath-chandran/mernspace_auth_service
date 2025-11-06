@@ -19,9 +19,9 @@ app.use('/auth', authRoutes);
 app.post('/auth/logout', (req, res) => {
   res.clearCookie('refreshToken', {
     httpOnly: true,
-    // secure: false, // set true in production
-    secure: true, // set true in production
-    sameSite: 'strict',
+    secure: true, // true on HTTPS (Vercel/Render)
+    sameSite: 'none',
+    path: '/',
   });
 
   return res.json({ message: 'Logged out successfully' });
