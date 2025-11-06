@@ -47,7 +47,8 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: false, // set true in production
+      // secure: false, // set true in production
+      secure: true, // set true in production
       sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });

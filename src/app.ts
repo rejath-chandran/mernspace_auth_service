@@ -19,7 +19,8 @@ app.use('/auth', authRoutes);
 app.post('/auth/logout', (req, res) => {
   res.clearCookie('refreshToken', {
     httpOnly: true,
-    secure: false, // set true in production
+    // secure: false, // set true in production
+    secure: true, // set true in production
     sameSite: 'strict',
   });
 
