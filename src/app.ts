@@ -1,26 +1,29 @@
-import express, { NextFunction, Request, Response } from 'express';
-import { HttpError } from 'http-errors';
-import logger from './config/logger';
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import authRoutes from './routes/auth.routes';
+import cors from 'cors';
 const app = express();
 
-app.get('/', async (req, res, next) => {
-  try {
-    // throw createHttpError(401, 'Not Found');
-    res.status(200).json({ message: 'Welcome to Auth Service' });
-  } catch (error) {
-    next(error);
-  }
-});
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
-  logger.error(err.message);
-  const statusCode = err.status || 500;
+app.use(express.json());
+app.use(cookieParser());
 
-  res.status(statusCode).json({
-    errors: [
-      { type: err.name || 'InternalServerError', message: err.message || 'Internal Server Error' },
-    ],
+app.use('/auth', authRoutes);
+
+app.post('/auth/logout', (req, res) => {
+  res.clearCookie('refreshToken', {
+    httpOnly: true,
+    secure: false, // set true in production
+    sameSite: 'strict',
   });
+
+  return res.json({ message: 'Logged out successfully' });
 });
+
 export default app;

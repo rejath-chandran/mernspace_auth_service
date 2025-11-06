@@ -1,17 +1,9 @@
-import { configs } from './config';
-
+import { config } from 'dotenv';
+config();
 import app from './app';
+import { connectDB } from './config/db';
 
-import logger from './config/logger';
-const StartServer = async () => {
-  try {
-    app.listen(configs.PORT, () => {
-      logger.info(`Server running on port `, { port: configs.PORT, env: configs.NODE_ENV });
-    });
-  } catch (error) {
-    console.error('Error starting server:', error);
-    process.exit(1);
-  }
-};
+connectDB();
 
-StartServer();
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
